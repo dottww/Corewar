@@ -3,6 +3,7 @@ obj/
 cache/
 corewar
 asm
+tmp/
 
 # Prerequisites
 *.d

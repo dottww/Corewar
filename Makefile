@@ -6,17 +6,42 @@
 #    By: weilin <weilin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 01:11:49 by weilin            #+#    #+#              #
-#    Updated: 2020/07/02 01:16:49 by weilin           ###   ########.fr        #
+#    Updated: 2020/07/24 07:36:05 by weilin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ASM = asm
-COREWAR = corewar
+VM = corewar
 
 ASM_FILES = 
 
-COREWAR_FILES = 
-
+VM_FILES = vm/op/exec\
+		vm/op/g_ops\
+		vm/op/tool_arr\
+		vm/op/tool_arg\
+		vm/op/tool_check\
+		vm/op/tool_del\
+		vm/op/tool_exec\
+		vm/op/tool_op\
+		vm/op/tool_pc\
+		vm/op/tool_process\
+		vm/op/tool_verbose\
+		vm/op/add	\
+		vm/op/aff	\
+		vm/op/and	\
+		vm/op/fork	\
+		vm/op/ld	\
+		vm/op/ldi	\
+		vm/op/live	\
+		vm/op/lld	\
+		vm/op/lldi	\
+		vm/op/or	\
+		vm/op/st	\
+		vm/op/sti	\
+		vm/op/sub	\
+		vm/op/xor	\
+		vm/op/zjmp	\
+		vm/op/main_op	\
 
 CCH_DIR = cache/
 SRC_DIR = src/
@@ -25,31 +50,34 @@ LINC_DIR = libft/inc/
 LIB_DIR = libft/
 LIBFT = $(LIB_DIR)libft.a
 
-INCS += $(INC_DIR)corewar.h 
-INCS += $(LINC_DIR)libft.h 
-INCS += $(LINC_DIR)ft_printf.h
-INCS += $(LINC_DIR)get_next_line.h
+HEADERS += $(INC_DIR)op.h
+HEADERS += $(INC_DIR)vm.h
+HEADERS += $(LINC_DIR)libft.h
+HEADERS += $(LINC_DIR)ft_printf.h
+HEADERS += $(LINC_DIR)get_next_line.h
+
+INCS = -I$(INC_DIR) -I$(LINC_DIR)
 
 CC = clang
-FLAGS = -Wall -Wextra -Werror -g -I$(INC_DIR) -I$(LINC_DIR)
+FLAGS = -Wall -Wextra -Werror -g
 LEAKS = -fsanitize=address
 RM = rm -rf
 
 ASM_SRC = $(addprefix $(SRC_DIR),$(addsuffix .c,$(ASM_FILES)))
 ASM_OBJ = $(addprefix $(CCH_DIR),$(addsuffix .o,$(ASM_FILES)))
-COREWAR_SRC = $(addprefix $(SRC_DIR),$(addsuffix .c,$(COREWAR_FILES)))
-COREWAR_OBJ = $(addprefix $(CCH_DIR),$(addsuffix .o,$(COREWAR_FILES)))
+VM_SRC = $(addprefix $(SRC_DIR),$(addsuffix .c,$(VM_FILES)))
+VM_OBJ = $(addprefix $(CCH_DIR),$(addsuffix .o,$(VM_FILES)))
 
 vpath  %.h inc/
 vpath  %.h libft/inc/
 
-all: $(ASM) $(COREWAR)
+all: $(VM)
 
-$(ASM): $(LIBFT) $(CCH_DIR) $(ASM_OBJ) $(INCS)
-	$(CC) $(FLAGS) -o $@ $< $(ASM_OBJ) -L $(LIB_DIR) -lft
+$(ASM): $(LIBFT) $(CCH_DIR) $(ASM_OBJ) $(HEADERS)
+	$(CC) $(FLAGS) $(INCS) $(ASM_OBJ) -L $(LIB_DIR) -lft -o $@
 
-$(COREWAR): $(LIBFT) $(CCH_DIR) $(COREWAR_OBJ) $(INCS)
-	$(CC) $(FLAGS) -o $@ $< $(COREWAR_OBJ) -L $(LIB_DIR) -lft
+$(VM): $(LIBFT) $(CCH_DIR) $(VM_OBJ) $(HEADERS)
+	$(CC) $(FLAGS) $(INCS) $(VM_OBJ) -L $(LIB_DIR) -lft -o $@
 
 $(LIBFT): force
 	@make -C libft all
@@ -57,24 +85,26 @@ $(LIBFT): force
 force:
 	@true
 
-$(CCH_DIR)%.o: $(SRC_DIR)%.c $(INCS)| $(CCH_DIR)
-	$(CC) $(FLAGS) -c $< -o $@
+$(CCH_DIR)%.o: $(SRC_DIR)%.c $(HEADERS)| $(CCH_DIR)
+	$(CC) $(FLAGS) -c $(INCS) $< -o $@
 
 $(CCH_DIR):
 	mkdir $@
+	mkdir cache/vm/
+	mkdir cache/vm/op
 
 clean:
 	$(RM) $(CCH_DIR)
 	$(RM) $(ASM).dSYM
-	$(RM) $(COREWAR).dSYM
+	$(RM) $(VM).dSYM
 	$(RM) *.o
 	$(RM) *.out*
-	# make -C libft clean
+	make -C libft clean
 	
 fclean: clean
 	$(RM) $(ASM)
-	$(RM) $(COREWAR)
-	# make -C libft fclean
+	$(RM) $(VM)
+	make -C libft fclean
 
 re: fclean
 	$(MAKE) all
