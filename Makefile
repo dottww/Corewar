@@ -5,111 +5,85 @@
 #                                                     +:+ +:+         +:+      #
 #    By: weilin <weilin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/07/02 01:11:49 by weilin            #+#    #+#              #
-#    Updated: 2020/07/24 07:36:05 by weilin           ###   ########.fr        #
+#    Created: 2020/02/26 01:31:01 by cseguier          #+#    #+#              #
+#    Updated: 2020/08/02 23:25:44 by weilin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-ASM = asm
-VM = corewar
+.PHONY: all clean fclean re
+# .SILENT:
 
-ASM_FILES = 
+NAME = corewar
 
-VM_FILES = vm/op/exec\
-		vm/op/g_ops\
-		vm/op/tool_arr\
-		vm/op/tool_arg\
-		vm/op/tool_check\
-		vm/op/tool_del\
-		vm/op/tool_exec\
-		vm/op/tool_op\
-		vm/op/tool_pc\
-		vm/op/tool_process\
-		vm/op/tool_verbose\
-		vm/op/add	\
-		vm/op/aff	\
-		vm/op/and	\
-		vm/op/fork	\
-		vm/op/ld	\
-		vm/op/ldi	\
-		vm/op/live	\
-		vm/op/lld	\
-		vm/op/lldi	\
-		vm/op/or	\
-		vm/op/st	\
-		vm/op/sti	\
-		vm/op/sub	\
-		vm/op/xor	\
-		vm/op/zjmp	\
-		vm/op/main_op	\
+LIBFT = libft/libftprintf.a
 
-CCH_DIR = cache/
-SRC_DIR = src/
-INC_DIR = inc/
-LINC_DIR = libft/inc/
-LIB_DIR = libft/
-LIBFT = $(LIB_DIR)libft.a
+FILE = vm.c swap_op.c \
+	add.c aff.c and.c exec.c g_ops.c ld.c ldi.c live.c lld.c lldi.c \
+	or.c st.c sti.c sub.c tool_arg.c tool_exec.c tool_game.c \
+	tool_op.c tool_pc.c tool_verbose.c xor.c zjmp.c \
+	fork_gestion.c game.c player_death.c print_things.c process_death.c \
+	basics_process.c delete_process.c tool_process.c\
+	are_options_legit.c arg_parse.c check_champs.c does_arg_exist.c \
+	is_dump_option_legit.c is_enough_args.c is_helpers.c is_n_option_legit.c \
+	player.c startup.c fork.c check_ctd.c is_helpers2.c\
 
-HEADERS += $(INC_DIR)op.h
-HEADERS += $(INC_DIR)vm.h
-HEADERS += $(LINC_DIR)libft.h
-HEADERS += $(LINC_DIR)ft_printf.h
-HEADERS += $(LINC_DIR)get_next_line.h
+PATH_ASM = asm_dir/
 
-INCS = -I$(INC_DIR) -I$(LINC_DIR)
-
-CC = clang
-FLAGS = -Wall -Wextra -Werror -g
-LEAKS = -fsanitize=address
+INC = -I libft
+HDR = includes/corewar.h
+SRC = $(FILE:%=%)
+OBJ = $(FILE:%.c=objs/%.o)
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address,undefined #-g3 #-O3
+CC = gcc $(CFLAGS) $(INC)
 RM = rm -rf
 
-ASM_SRC = $(addprefix $(SRC_DIR),$(addsuffix .c,$(ASM_FILES)))
-ASM_OBJ = $(addprefix $(CCH_DIR),$(addsuffix .o,$(ASM_FILES)))
-VM_SRC = $(addprefix $(SRC_DIR),$(addsuffix .c,$(VM_FILES)))
-VM_OBJ = $(addprefix $(CCH_DIR),$(addsuffix .o,$(VM_FILES)))
+all: $(NAME)
+	make -C asm_dir
+	mv asm_dir/asm .
 
-vpath  %.h inc/
-vpath  %.h libft/inc/
+$(NAME) : $(LIBFT) $(OBJ)
+	@$(CC) -o $@ $(OBJ) -L libft/ -lftprintf 
 
-all: $(VM)
+$(LIBFT) : FORCE
+	make -C libft/ all
 
-$(ASM): $(LIBFT) $(CCH_DIR) $(ASM_OBJ) $(HEADERS)
-	$(CC) $(FLAGS) $(INCS) $(ASM_OBJ) -L $(LIB_DIR) -lft -o $@
+FORCE:
 
-$(VM): $(LIBFT) $(CCH_DIR) $(VM_OBJ) $(HEADERS)
-	$(CC) $(FLAGS) $(INCS) $(VM_OBJ) -L $(LIB_DIR) -lft -o $@
+objs/%.o: src/%.c $(HDR)
+	@mkdir -p objs
+	$(CC) $(INC) -o $@ -c $<
 
-$(LIBFT): force
-	@make -C libft all
+objs/%.o: src/game_cycle/%.c $(HDR)
+	@mkdir -p objs
+	$(CC) $(INC) -o $@ -c $<
 
-force:
-	@true
+objs/%.o: src/op/%.c $(HDR)
+	@mkdir -p objs
+	$(CC) $(INC) -o $@ -c $<
 
-$(CCH_DIR)%.o: $(SRC_DIR)%.c $(HEADERS)| $(CCH_DIR)
-	$(CC) $(FLAGS) -c $(INCS) $< -o $@
+objs/%.o: src/parser/%.c $(HDR)
+	@mkdir -p objs
+	$(CC) $(INC) -o $@ -c $<
 
-$(CCH_DIR):
-	mkdir $@
-	mkdir cache/vm/
-	mkdir cache/vm/op
+objs/%.o: src/process/%.c $(HDR)
+	@mkdir -p objs
+	$(CC) $(INC) -o $@ -c $<
+
+#objs/%.o: src/folder/%.c
+#	mkdir -p objs
+#	$(CC) $(INC) -o $@ -c $<
 
 clean:
-	$(RM) $(CCH_DIR)
-	$(RM) $(ASM).dSYM
-	$(RM) $(VM).dSYM
-	$(RM) *.o
-	$(RM) *.out*
-	make -C libft clean
-	
+	$(RM) $(OBJ)
+	rm -rf objs
+	make -C libft/ clean
+	make -C asm_dir clean
+
 fclean: clean
-	$(RM) $(ASM)
-	$(RM) $(VM)
-	make -C libft fclean
+	$(RM) $(NAME)
+	$(RM) asm
+	make -C libft/ fclean
+	make -C asm_dir fclean
 
 re: fclean
-	$(MAKE) all
-
-norm:
-	norminette $(SRC_DIR) $(INC_DIR) | grep -v Norme -B1 || true
-
-.PHONY: all clean fclean re norm
+	$(MAKE)
