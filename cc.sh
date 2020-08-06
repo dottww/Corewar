@@ -20,8 +20,8 @@ diff "${PAUL}" "${OFI}" -s > "$PAULDIFF"
 
 
 		open -a Visual\ Studio\ Code ${MINE}
-		# open -a Visual\ Studio\ Code ${OFI}
-		# open -a Visual\ Studio\ Code ${DIFF}
+		open -a Visual\ Studio\ Code ${OFI}
+		open -a Visual\ Studio\ Code ${DIFF}
 		# open -a Visual\ Studio\ Code ${PAUL}
 		# open -a Visual\ Studio\ Code ${PAULDIFF}
 

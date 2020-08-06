@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/10 16:31:58 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/06 12:53:39 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/06 13:41:52 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int				skip_wrong_encoded(t_env *e, t_process *prcs, int nb_arg)
 		encoded <<= 2;
 		i += 1;
 	}
-	/*de*/ (1)?	ft_printf("skip_wrong_encoded\n"):0;
+	/*de*/ (0)?	ft_printf("skip_wrong_encoded\n"):0;
 	V_DEBUG ? verbose_16(e, prcs, skip + 1) : 0;
 	move_pc(prcs, skip + 2);
 	prcs->op_cooldown = g_ops[prcs->op_code_to_exec].exec_cycle - 1;
@@ -61,7 +61,8 @@ int				check_arg_type(t_env *e, t_process *prcs)
 	while (i < nb_arg)
 	{
 		if (!(e->args[i][1] & g_ops[prcs->op_code_to_exec].arg_type[i]))
-			return (skip_wrong_encoded(e, prcs, nb_arg));
+			return (false);
+			// return (skip_wrong_encoded(e, prcs, nb_arg));
 		i++;
 	}
 	return (true);
@@ -88,13 +89,17 @@ int				arg_encoding(t_env *e, t_process *prcs)
 
 int				init_args(t_env *e, t_process *prcs)
 {
+	int			nb_arg;
+
+	nb_arg = g_ops[prcs->op_code_to_exec].nb_arg;
 	if (g_ops[prcs->op_code_to_exec].encoding)
 	{
-	/*de*/ (1)?		ft_printf("init_args 1\n"):0;
+	/*de*/ (0)?		ft_printf("init_args 1\n"):0;
 		if (!arg_encoding(e, prcs))
 		{
-		/*de*/ (1)?		ft_printf("init_args 2\n"):0;
-			return (false);
+		/*de*/ (0)?		ft_printf("init_args 2\n"):0;
+			return (skip_wrong_encoded(e, prcs, nb_arg));
+			// return (false);
 		}
 	}
 	else

@@ -10,7 +10,7 @@
 			"request": "launch",
 			"program": "${workspaceFolder}/corewar",
 			// "args": ["lf.cor", "zj.cor", "zork.cor"],
-			"args": ["inv.cor"],
+			"args": ["invu.cor"],
 			// "args": ["champs/examples/bee_gees.cor", "champs/examples/bigzork.cor"],
 			// "args": ["-dump", "2050", "lf.cor" ,"live.cor"],
 			"stopAtEntry": false,
