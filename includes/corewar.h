@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/20 09:06:54 by cseguier          #+#    #+#             */
-/*   Updated: 2020/08/05 19:47:15 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/06 15:53:51 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdbool.h>
 
 # define V_DEBUG			true
+// # define V_DEBUG			false
 # define USAGE	"Usage: ./corewar [-dump N -n pid] <champion.cor>"
 
 # define N1		"when using -n option, you should assign it for each player"

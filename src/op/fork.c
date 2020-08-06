@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 20:35:24 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/02 22:21:49 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/06 15:15:04 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void		do_fork_op(t_env *e, t_process *curr_prcs, bool flag)
 
 	val = (short)e->args[0][0];
 	val = flag ? (val % IDX_MOD) : val;
-	pc = (curr_prcs->registers[PC] + val) % MEM_SIZE;
+	pc = (curr_prcs->registers[PC] + val);
 	new_prcs = add_new_process(*curr_prcs, &(e->info));
 	move_pc(new_prcs, val);
 	V_DEBUG ? op_verbose_4(curr_prcs, e->args[0][0], pc) : 0;

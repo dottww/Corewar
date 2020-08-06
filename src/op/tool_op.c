@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 23:00:28 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/05 20:13:01 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/06 14:22:28 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int				ft_value_from_address(t_env *e, int pc, short indirect)
 	long		pos;
 	uint8_t		tab[4];
 
-	pos = (pc + (indirect % IDX_MOD)) % MEM_SIZE;
+	pos = (pc + (indirect % IDX_MOD)) % MEM_SIZE; ///////pending_move_pc
 	tab[0] = e->arena[pos++ % MEM_SIZE];
 	tab[1] = e->arena[pos++ % MEM_SIZE];
 	tab[2] = e->arena[pos++ % MEM_SIZE];

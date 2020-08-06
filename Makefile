@@ -6,7 +6,7 @@
 #    By: weilin <weilin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/26 01:31:01 by cseguier          #+#    #+#              #
-#    Updated: 2020/08/02 23:25:44 by weilin           ###   ########.fr        #
+#    Updated: 2020/08/06 16:02:08 by weilin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ FILE = vm.c swap_op.c \
 	add.c aff.c and.c exec.c g_ops.c ld.c ldi.c live.c lld.c lldi.c \
 	or.c st.c sti.c sub.c tool_arg.c tool_exec.c tool_game.c \
 	tool_op.c tool_pc.c tool_verbose.c xor.c zjmp.c \
-	fork_gestion.c game.c player_death.c print_things.c process_death.c \
+	game.c player_death.c print_things.c process_death.c \
 	basics_process.c delete_process.c tool_process.c\
 	are_options_legit.c arg_parse.c check_champs.c does_arg_exist.c \
 	is_dump_option_legit.c is_enough_args.c is_helpers.c is_n_option_legit.c \

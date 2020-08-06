@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 20:35:17 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/02 22:18:43 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/06 15:23:24 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ void		op_sti(t_env *e, t_process *prcs)
 	arg_3 = get_sti_ldi_val(e, prcs, e->args[2]);
 	e->args[1][0] = arg_2;
 	e->args[2][0] = arg_3;
-	ptr = (prcs->registers[PC] + ((arg_2 + arg_3) % IDX_MOD)) % MEM_SIZE;
+	ptr = (prcs->registers[PC] + ((arg_2 + arg_3) % IDX_MOD));
 	V_DEBUG ? op_verbose_4(prcs, e->args, ptr) : 0;
+	ptr %= MEM_SIZE;
 	int_to_mem(e, prcs->registers[arg_1], (ptr + 3) % MEM_SIZE);
 	pc_movement(e, prcs);
 }
