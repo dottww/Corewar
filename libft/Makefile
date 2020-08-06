@@ -3,162 +3,64 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: weilin <weilin@student.42.fr>              +#+  +:+       +#+         #
+#    By: cseguier <cseguier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/01/11 16:48:33 by weilin            #+#    #+#              #
-#    Updated: 2020/06/30 20:59:01 by weilin           ###   ########.fr        #
+#    Created: 2018/11/07 17:07:19 by cseguier          #+#    #+#              #
+#    Updated: 2020/07/23 13:00:29 by cseguier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libft.a
+.PHONY: all, clean, fclean, re
+.SILENT:
 
-OTH_DIR = other/
-OTH_FILES = get_next_line
+NAME = libftprintf.a
 
-LIB_DIR = generic/
-LIB_FILES = ft_tolower\
-		ft_toupper\
-		ft_isalpha\
-		ft_isdigit\
-		ft_isalnum\
-		ft_isascii\
-		ft_isprint\
-		ft_isnumber\
-		ft_strlen\
-		ft_strcpy\
-		ft_strncpy\
-		ft_strcmp\
-		ft_strncmp\
-		ft_strcat\
-		ft_strncat\
-		ft_strlcat\
-		ft_atoi\
-		ft_strdup\
-		ft_strdup_sec\
-		ft_strstr\
-		ft_strnstr\
-		ft_strchr\
-		ft_strrchr\
-		ft_memset\
-		ft_memcpy\
-		ft_memccpy\
-		ft_memmove\
-		ft_memchr\
-		ft_memcmp\
-		ft_bzero\
-		ft_memalloc\
-		ft_memdel\
-		ft_strnew\
-		ft_strnew_c\
-		ft_strdel\
-		ft_strclr\
-		ft_striter\
-		ft_striteri\
-		ft_strmap\
-		ft_strmapi\
-		ft_strequ\
-		ft_strnequ\
-		ft_strsub\
-		ft_strjoin\
-		ft_strtrim\
-		ft_strsplit_c\
-		ft_strsplit_wd\
-		ft_itoa\
-		ft_putchar\
-		ft_putstr\
-		ft_putnbr\
-		ft_putendl\
-		ft_putchar_fd\
-		ft_putstr_fd\
-		ft_putnbr_fd\
-		ft_putendl_fd\
-		ft_lstnew\
-		ft_lstdelone\
-		ft_lstdel\
-		ft_lstadd\
-		ft_lstiter\
-		ft_lstmap\
-		ft_int_len\
-		ft_sqrt\
-		ft_count_if\
-		ft_print_words_tables\
-		ft_wd\
-		ft_wdc\
-		ft_wd_num\
-		ft_count_c\
-		ft_strreset\
-		ft_strtolower\
-		ft_strtab_free\
-		ft_lstlen\
-		ft_lstappend\
-		ft_atoull\
-		ft_iswhitespace\
-		ft_split_whitespaces\
-		ft_lstprepend\
-		ft_lst_mergesort\
-		ft_lstrev\
-		ft_atoi_int\
-		ft_strtab_free_ret\
-		ft_delcontent
-		
-#ft_split_whitespaces might be slow
-#ft_lstlen del
-#re-check ft_lst_mergesort
-#re-check ft_lstrev
+FILE = 	ft_abs.c ft_atoi.c ft_bzero.c ft_capitalize.c ft_doublefree.c \
+		ft_doubleprint.c ft_foreach.c get_next_line.c get_next_line_utils.c \
+		ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c \
+		ft_itoa.c ft_itoa_base.c ft_lowcase.c ft_lstadd.c ft_lstdel.c  \
+		ft_lstdelone.c ft_lstiter.c ft_lstmap.c ft_lstnew.c ft_memalloc.c \
+		ft_memccpy.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memdel.c \
+		ft_memmove.c ft_memset.c ft_pow.c ft_putchar.c ft_putchar_fd.c \
+		ft_putendl.c ft_putendl_fd.c ft_putnbr.c ft_putnbr_fd.c ft_putnstr.c \
+		ft_putstr.c ft_putstr_fd.c ft_quicksort.c ft_round.c ft_sqrt.c \
+		ft_strcat.c ft_strccpy.c ft_strcdup.c ft_strchr.c ft_strclr.c \
+		ft_strcmp.c ft_strcpy.c ft_strdel.c ft_strdup.c ft_strequ.c \
+		ft_stricpy.c ft_stridup.c ft_striter.c ft_striteri.c ft_strjoin.c \
+		ft_strlcat.c ft_strlen.c ft_strmap.c ft_strmapi.c ft_strncat.c \
+		ft_strncmp.c ft_strncpy.c ft_strnequ.c ft_strnew.c ft_strnstr.c \
+		ft_strrchr.c ft_strrev.c ft_strsplit.c ft_strstr.c ft_strsub.c \
+		ft_strtok.c ft_strtrim.c ft_tolower.c ft_toupper.c ft_upcase.c \
+		ft_printf.c pft_parser.c pft_node.c pft_flag_process.c \
+		pft_add_stuff.c pft_add_width.c pft_convert.c pft_check.c \
+		pft_get_type.c pft_get_double.c pft_get_unsigned.c \
+		hash_table_api.c hash_table_utils.c hash_table_tools.c\
+		queue.c queue_utils.c exit_error.c \
 
-PTF_DIR = ft_printf/
-PTF_FILES = ft_printf parse tool type_csp print_chars print_addr type_di base \
-		type_ox print_int type_uint parse_flags
+SRC = $(FILE:%=%)
 
-FILES+= $(addprefix $(OTH_DIR),$(OTH_FILES))
-FILES+= $(addprefix $(LIB_DIR),$(LIB_FILES))
-FILES+= $(addprefix $(PTF_DIR),$(PTF_FILES))
+OBJ = $(FILE:%.c=objs/%.o)
 
+CFLAGS = -Wall -Werror -Wextra #-fsanitize=address
 CC = gcc
-FLAG = -Wall -Wextra -Werror -g -I $(INC_DIR)
-
-RM = rm -rf
-
-CCH_DIR = cache/
-SRC_DIR = src/
-INC_DIR = inc/
-
-SRC = $(addprefix $(SRC_DIR),$(addsuffix .c,$(FILES)))
-OBJ = $(addprefix $(CCH_DIR),$(addsuffix .o,$(FILES)))
+RM = rm -f
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar -rusc $@ $^
-	ranlib $@
-# ar rcs $@ $^
-# Running "ar s" on an archive is equivalent to running ranlib on it.
-# $^ means the all prerequisites
+	ar rcs $(NAME) $(OBJ)
+	ranlib $(NAME)
 
-$(CCH_DIR)%.o: $(SRC_DIR)%.c | $(CCH_DIR)
-	$(CC) $(FLAG) -c $< -o $@
-#if .o is older than .c, then do the content
-# $< means the first prerequisite
-# | The names of all the order-only prerequisites, with spaces between them.
-
-$(CCH_DIR):
-	mkdir $@
-	mkdir $(CCH_DIR)$(OTH_DIR)
-	mkdir $(CCH_DIR)$(LIB_DIR)
-	mkdir $(CCH_DIR)$(PTF_DIR)
+objs/%.o: */%.c
+	mkdir -p objs
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(CCH_DIR)
-	$(RM) *.o
-	$(RM) *.out*
+	$(RM) $(OBJ)
+	rm -df objs
 
 fclean: clean
 	$(RM) $(NAME)
 
 re: fclean
-	$(MAKE) all
-
-norm:
-	norminette $(SRC) $(INC_DIR) | grep -v Norme -B1 || true
-
-.PHONY: all clean fclean re norm
+	$(MAKE)

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source colors.sh
-
 function zero_pad {
 	to_pad=$1
 	new_size=$2

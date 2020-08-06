@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/10 16:31:58 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/05 19:24:34 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/06 12:53:39 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int				skip_wrong_encoded(t_env *e, t_process *prcs, int nb_arg)
 		encoded <<= 2;
 		i += 1;
 	}
-	/*de*/ (0)?	ft_printf("skip_wrong_encoded\n"):0;
+	/*de*/ (1)?	ft_printf("skip_wrong_encoded\n"):0;
 	V_DEBUG ? verbose_16(e, prcs, skip + 1) : 0;
 	move_pc(prcs, skip + 2);
 	prcs->op_cooldown = g_ops[prcs->op_code_to_exec].exec_cycle - 1;
@@ -90,10 +90,10 @@ int				init_args(t_env *e, t_process *prcs)
 {
 	if (g_ops[prcs->op_code_to_exec].encoding)
 	{
-	/*de*/ (0)?		ft_printf("init_args 1\n"):0;
+	/*de*/ (1)?		ft_printf("init_args 1\n"):0;
 		if (!arg_encoding(e, prcs))
 		{
-		/*de*/ (0)?		ft_printf("init_args 2\n"):0;
+		/*de*/ (1)?		ft_printf("init_args 2\n"):0;
 			return (false);
 		}
 	}

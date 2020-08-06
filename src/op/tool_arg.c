@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 18:59:18 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/05 19:24:34 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/06 13:10:05 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		check_arg_value(t_env *e, t_process *prcs)
 {
 	int		i;
 	int		nb_arg;
-/*de*/ (0)?	ft_printf("init_args 4\n"):0;
+/*de*/ (1)?	ft_printf("init_args 4\n"):0;
 	nb_arg = g_ops[prcs->op_code_to_exec].nb_arg;
 	i = 0;
 	while (i < nb_arg)
@@ -66,11 +66,11 @@ int		check_arg_value(t_env *e, t_process *prcs)
 		if (e->args[i][1] == T_REG &&
 			(e->args[i][0] <= 0 || e->args[i][0] >= 17))
 		{
-		/*de*/ (0)?		ft_printf("init_args 5\n"):0;
+		/*de*/ (1)?		ft_printf("init_args 5\n"):0;
+		/*de*/ (1)?		ft_printf("T_REG_ERROR[%d], op/cd [%d/%d], cycle %d\n",e->args[i][0], prcs->op_code_to_exec, prcs->op_cooldown, e->game.cycle_cpt):0;
+			pc_movement(e, prcs);
 			prcs->op_cooldown = 0;
 			prcs->op_code_to_exec = -2;
-		/*de*/ (0)?		ft_printf("T_REG_ERROR, op/cd [%d/%d], cycle %d\n",prcs->op_code_to_exec, prcs->op_cooldown, e->game.cycle_cpt):0;
-			pc_movement(e, prcs);
 			return (false);
 		}
 		i++;
@@ -101,7 +101,7 @@ int		check_arg_value(t_env *e, t_process *prcs)
 // /*de*/ (1)?		ft_printf("pc[%d],i=%d, e->args[%d][0]=%d\n",prcs->registers[PC],i,i,e->args[i][0]):0;
 // 		i++;
 // 	}
-// /*de*/ (0)?		ft_printf("init_args 3\n"):0;
+// /*de*/ (1)?		ft_printf("init_args 3\n"):0;
 // 	return (check_arg_value(e, prcs));
 // }
 int		ft_convert_ram_to_args(t_env *e, int end, int *i_ptr, int j)
@@ -109,13 +109,13 @@ int		ft_convert_ram_to_args(t_env *e, int end, int *i_ptr, int j)
 	int	start;
 
 	start = *i_ptr;
-(0)?		ft_printf("\nargs[%d][0], %d to %d \n",j,start,end):0;
+(1)?		ft_printf("\nft_convert_ram_to_args, args[%d][0], %d to %d \n",j,start,end):0;
 	while (start < end)
 	{
 		e->args[j][0] |= e->arena[start % MEM_SIZE];
 		if (start < end - 1)
 			e->args[j][0] <<= 8;
-(0)?		ft_printf("i=%d,args[%d][0]=%d\n",start,j,e->args[j][0]):0;
+(1)?		ft_printf("i=%d,args[%d][0]=%d\n",start,j,e->args[j][0]):0;
 		start += 1;
 	}
 	// ft_printf("e[%d],i=%d, e->args[%d][0]=%d\n",e->,prcs->registers[PC],i,i,e->args[i][0]);
@@ -146,18 +146,19 @@ int		get_arg_value(t_env *e, t_process *prcs)
 			// e->args[i][0] = mem_to_val(e, &ptr
 			// , g_ops[prcs->op_code_to_exec].dirsize);
 
-/*de*/ (0)?		ft_printf("pc[%d],i=%d, e->args[%d][0]=%d\n",prcs->registers[PC],i,i,e->args[i][0]):0;
+/*de*/ (1)?		ft_printf("get_arg_value,pc[%d],i=%d, e->args[%d][0]=%d\n",prcs->registers[PC],i,i,e->args[i][0]):0;
 		i++;
 	}
-/*de*/ (0)?		ft_printf("init_args 3\n"):0;
+/*de*/ (1)?		ft_printf("init_args 3\n"):0;
 	return (check_arg_value(e, prcs));
 }
 
 int		get_arg_type(u_int8_t encoded, t_process *prcs, t_env *e, int i)
 {
 	u_int8_t	mask;
-
+	
 	mask = encoded & BIT_IND;
+/*de*/ (1)?		ft_printf("init_args 1->get_arg_type, mask=%d\n", mask):0;
 	if (mask == BIT_REG
 				&& (g_ops[prcs->op_code_to_exec].arg_type[i] & T_REG) != 0)
 		e->args[i][1] = T_REG;
