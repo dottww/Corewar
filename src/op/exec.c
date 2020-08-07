@@ -6,13 +6,13 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 19:39:46 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/07 14:04:53 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/07 16:03:30 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/corewar.h"
 
-void exec_ops(t_env *e, t_process *prcs)
+void	exec_ops(t_env *e, t_process *prcs)
 {
 	if (!init_args(e, prcs))
 	{

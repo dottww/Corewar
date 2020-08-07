@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/20 09:06:54 by cseguier          #+#    #+#             */
-/*   Updated: 2020/08/07 16:01:32 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/07 16:04:01 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,7 +276,8 @@ int				are_all_players_dead(t_player p[MAX_PLAYERS], int ps);
 void			pc_movement(t_env *e, t_process *prcs);
 void			move_pc(t_process *prcs, int interval);
 void			exec_ops(t_env *e, t_process *prcs);
-long			get_and_or_val(t_env *e, int pc, u_int32_t arg[2], t_process *prcs);
+long			get_and_or_val(t_env *e, int pc
+							, u_int32_t arg[2], t_process *prcs);
 int				init_args(t_env *e, t_process *prcs);
 int				mem_to_val(t_env *e, int *ptr, int size);
 int				get_sti_ldi_val(t_env *e, t_process *prcs, u_int32_t arg[2]);

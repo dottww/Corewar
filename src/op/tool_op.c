@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 23:00:28 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/07 16:01:01 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/07 16:03:31 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		get_ind_value(t_env *e, int pc, short ind)
 	return (val);
 }
 
-int				mem_to_val(t_env *e, int *ext_ptr, int size)
+int		mem_to_val(t_env *e, int *ext_ptr, int size)
 {
 	int			i;
 	u_int32_t	val;
@@ -50,7 +50,7 @@ int				mem_to_val(t_env *e, int *ext_ptr, int size)
 	return (val);
 }
 
-long			get_and_or_val(t_env *e, int pc
+long	get_and_or_val(t_env *e, int pc
 						, u_int32_t arg[2], t_process *prcs)
 {
 	if (arg[1] == T_IND)
@@ -60,7 +60,7 @@ long			get_and_or_val(t_env *e, int pc
 	return (arg[0]);
 }
 
-int				get_sti_ldi_val(t_env *e, t_process *prcs, u_int32_t arg[2])
+int		get_sti_ldi_val(t_env *e, t_process *prcs, u_int32_t arg[2])
 {
 	int	val;
 
