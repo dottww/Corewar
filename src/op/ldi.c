@@ -6,13 +6,13 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 20:35:05 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/07 14:47:34 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/07 16:01:25 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/corewar.h"
 
-static void	ldi_second_line(t_process *prcs, int args[3][2])
+static void		ldi_second_line(t_process *prcs, int args[3][2])
 {
 	ft_printf("\n       | -> load from ");
 	if (args[0][1] == T_DIR)
@@ -28,7 +28,7 @@ static void	ldi_second_line(t_process *prcs, int args[3][2])
 	((args[0][0] + args[1][0]) % IDX_MOD));
 }
 
-static void	op_verbose_4(t_process *prcs, int args[3][2])
+static void		op_verbose_4(t_process *prcs, int args[3][2])
 {
 	int		i;
 
@@ -48,6 +48,23 @@ static void	op_verbose_4(t_process *prcs, int args[3][2])
 		i += 1;
 	}
 	ldi_second_line(prcs, args);
+}
+
+u_int32_t		char4_to_int(unsigned char tab[4])
+{
+	u_int32_t	result;
+	int			index;
+
+	result = 0;
+	index = 0;
+	while (index < 4)
+	{
+		result |= tab[index];
+		if (index < 3)
+			result <<= 8;
+		index++;
+	}
+	return (result);
 }
 
 int				ldi_mem_to_indirect(t_env *e, int pc, long indirect)
@@ -71,7 +88,7 @@ int				ldi_mem_to_indirect(t_env *e, int pc, long indirect)
 	return (val);
 }
 
-void		op_ldi(t_env *e, t_process *prcs)
+void			op_ldi(t_env *e, t_process *prcs)
 {
 	long	arg_1;
 	long	arg_2;

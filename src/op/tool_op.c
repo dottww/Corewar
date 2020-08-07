@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 23:00:28 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/07 15:00:00 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/07 16:01:01 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,50 +50,11 @@ int				mem_to_val(t_env *e, int *ext_ptr, int size)
 	return (val);
 }
 
-u_int32_t		char4_to_int(unsigned char tab[4])
-{
-	u_int32_t	result;
-	int			index;
-
-	result = 0;
-	index = 0;
-	while (index < 4)
-	{
-		result |= tab[index];
-		if (index < 3)
-			result <<= 8;
-		index++;
-	}
-	return (result);
-}
-
-int				mem_to_ind(t_env *e, int pc, short indirect)
-{
-	int			val;
-	long		ptr;
-	int			move;
-	u_int8_t	tab[4];
-
-	move = (indirect % IDX_MOD);
-	ptr = pc + move;
-	if (ptr < 0)
-		ptr = MEM_SIZE + (ptr % MEM_SIZE);
-	else
-		ptr = ptr % MEM_SIZE;
-	tab[0] = e->arena[ptr++ % MEM_SIZE];
-	tab[1] = e->arena[ptr++ % MEM_SIZE];
-	tab[2] = e->arena[ptr++ % MEM_SIZE];
-	tab[3] = e->arena[ptr % MEM_SIZE];
-	val = char4_to_int(tab);
-	return (val);
-}
-
 long			get_and_or_val(t_env *e, int pc
 						, u_int32_t arg[2], t_process *prcs)
 {
 	if (arg[1] == T_IND)
 		return (get_ind_value(e, pc, arg[0]));
-		// return (mem_to_ind(e, pc, arg[0]));
 	else if (arg[1] == T_REG)
 		return (prcs->registers[arg[0]]);
 	return (arg[0]);
@@ -110,6 +71,5 @@ int				get_sti_ldi_val(t_env *e, t_process *prcs, u_int32_t arg[2])
 		val = prcs->registers[val];
 	else if (arg[1] == T_IND)
 		val = get_ind_value(e, prcs->registers[PC], val);
-		// val = mem_to_ind(e, prcs->registers[PC], val);
 	return (val);
 }
