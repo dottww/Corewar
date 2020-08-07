@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 20:05:54 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/07 01:54:44 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/07 14:08:45 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ void		verbose_16(t_env *e, t_process *prcs, int skip)
 
 	pc = prcs->registers[PC];
 	ft_printf("ADV %d (%#.4x -> %#.4x) ", skip + 1, pc, pc + skip + 1);
-	// /*de*/ (0)?		ft_printf("ADV %d (%#.4x -> %#.4x) , skip == %d,", skip + 1, pc, pc + skip + 1, skip):0;
-	// /*de*/ (0)?		0:ft_printf("ADV %d (%#.4x -> %#.4x) ", skip + 1, pc, pc + skip + 1);
 	i = 0;
 	while (i <= skip)
 		ft_printf("%.2x ", e->arena[(pc + i++) % MEM_SIZE]);

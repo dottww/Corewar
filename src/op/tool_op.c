@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 23:00:28 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/07 01:54:44 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/07 14:08:29 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,42 +16,43 @@ int		get_ind_value(t_env *e, int pc, short ind)
 {
 	int	val;
 	int	ptr;
+	int move;
 
-	ptr = (pc + (ind % IDX_MOD)) % MEM_SIZE;
+	move = (ind % IDX_MOD);
+	ptr = pc + move;
+	if (ptr < 0)
+		ptr = MEM_SIZE + (ptr % MEM_SIZE);
+	else
+		ptr = ptr % MEM_SIZE;
 	val = mem_to_val(e, &ptr, 4);
 	return (val);
 }
 
-// int		get_ind_value(t_env *e, int pc, short ind)
-// {
-// 	int	val;
-// 	int	ptr;
-// 	int move;
-// 	// int move2;
-	
-// 	/*or*/ (0)?ft_printf("pc=%d \n", pc):0;
-// 	/*or*/ (0)?ft_printf("ind=%d \n", ind):0;
-	
-// 	move = (ind % IDX_MOD);
-// 	/*or*/ (0)?ft_printf("ind %% IDX_MOD(%d)=move=%d \n", move, IDX_MOD):0;
-
-// 	ptr = pc + move;
-// 	/*or*/ (0)?ft_printf("pc+move=%d \n", ptr):0;
-// 	if (ptr < 0)
-// 		ptr = MEM_SIZE + (move % MEM_SIZE);
-// 	else
-// 		ptr = ptr % MEM_SIZE;
-// 	/*or*/ (0)?ft_printf("correct pc=%d \n", ptr):0;
-// 	// ptr = (pc + (ind % IDX_MOD)) % MEM_SIZE;
-// 	// 		/*or*/ (0)?ft_printf("e->args[0]/[1]=[%d]/[%d] ", e->args[0],e->args[1]):0;
-// 	// 		/*or*/ (0)?ft_printf("arg1/2=%d/%d\n", arg_1,arg_2):0;
-// 	val = mem_to_val(e, &ptr, 2);
-// 	/*or*/ (0)?ft_printf("val=%d \n", val):0;
-// 	return (val);
-// }
-uint32_t		char4_to_int(unsigned char tab[4])
+int				mem_to_val(t_env *e, int *ext_ptr, int size)
 {
-	uint32_t	result;
+	int			i;
+	u_int32_t	val;
+	int			ptr;
+
+	ptr = (*ext_ptr) % MEM_SIZE;
+	val = 0;
+	i = 0;
+	while (i < size)
+	{
+		ptr = (ptr >= 0 ? ptr : MEM_SIZE + ptr);
+		val |= e->arena[ptr % MEM_SIZE];
+		if (i < size - 1)
+			val <<= 8;
+		ptr++;
+		i++;
+	}
+	*ext_ptr = ptr;
+	return (val);
+}
+
+u_int32_t		char4_to_int(unsigned char tab[4])
+{
+	u_int32_t	result;
 	int			index;
 
 	result = 0;
@@ -65,11 +66,12 @@ uint32_t		char4_to_int(unsigned char tab[4])
 	}
 	return (result);
 }
-int				ft_value_from_address(t_env *e, int pc, short indirect)
+
+int				mem_to_ind(t_env *e, int pc, short indirect)
 {
 	int			param;
 	long		pos;
-	uint8_t		tab[4];
+	u_int8_t	tab[4];
 
 	pos = (pc + (indirect % IDX_MOD)) % MEM_SIZE; ///////pending_move_pc
 	tab[0] = e->arena[pos++ % MEM_SIZE];
@@ -79,26 +81,19 @@ int				ft_value_from_address(t_env *e, int pc, short indirect)
 	param = char4_to_int(tab);
 	return (param);
 }
-// long ft_parameter_recover_value(t_vm *vm, size_t pc,	uint32_t tab[2], t_process *process)
-long		get_and_or_val(t_env *e, int pc, uint32_t arg[2], t_process *prcs)
+
+long			get_and_or_val(t_env *e, int pc
+						, u_int32_t arg[2], t_process *prcs)
 {
 	if (arg[1] == T_IND)
-		return (ft_value_from_address(e, pc, arg[0]));//ft_value_from_address
+		return (get_ind_value(e, pc, arg[0]));
+		// return (mem_to_ind(e, pc, arg[0]));
 	else if (arg[1] == T_REG)
 		return (prcs->registers[arg[0]]);
 	return (arg[0]);
 }
 
-// int		get_and_or_val(t_env *e, int pc, int arg[2], t_process *prcs)
-// {
-// 	if (arg[1] == T_IND)
-// 		return (get_ind_value(e, pc, arg[0]));
-// 	else if (arg[1] == T_REG)
-// 		return (prcs->registers[arg[0]]);
-// 	return (arg[0]);
-// }
-
-int		get_sti_ldi_val(t_env *e, t_process *prcs, uint32_t arg[2])
+int				get_sti_ldi_val(t_env *e, t_process *prcs, u_int32_t arg[2])
 {
 	int	val;
 
@@ -108,20 +103,7 @@ int		get_sti_ldi_val(t_env *e, t_process *prcs, uint32_t arg[2])
 	else if (arg[1] == T_REG)
 		val = prcs->registers[val];
 	else if (arg[1] == T_IND)
-		val = ft_value_from_address(e, prcs->registers[PC], val);
+		val = get_ind_value(e, prcs->registers[PC], val);
+		// val = mem_to_ind(e, prcs->registers[PC], val);
 	return (val);
 }
-
-// int		get_sti_ldi_val(t_env *e, t_process *prcs, int arg[2])
-// {
-// 	int	val;
-
-// 	val = arg[0];
-// 	if (arg[1] == T_DIR)
-// 		val = (short)arg[0];
-// 	else if (arg[1] == T_REG)
-// 		val = prcs->registers[val];
-// 	else if (arg[1] == T_IND)
-// 		val = get_ind_value(e, prcs->registers[PC], val);
-// 	return (val);
-// }

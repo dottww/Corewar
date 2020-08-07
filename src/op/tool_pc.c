@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 20:04:29 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/07 01:54:44 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/07 14:06:49 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	pc_movement(t_env *e, t_process *prcs)
 		skip_byte = 1;
 	nb_arg = g_ops[prcs->op_code_to_exec].nb_arg;
 	i = 0;
-	/*de*/ (0)?	ft_printf("pc_movement, i[%d] nb_arg[%d] skipbyre[%d] \n",i,nb_arg,skip_byte):0;
 	while (i < nb_arg)
 		skip_byte = skip_arg(e, skip_byte, i++, prcs->op_code_to_exec);
 	V_DEBUG ? verbose_16(e, prcs, skip_byte) : 0;

@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/20 09:06:54 by cseguier          #+#    #+#             */
-/*   Updated: 2020/08/06 23:18:12 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/07 14:10:29 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 # include "../libft/includes/ft_printf.h"
 # include <stdbool.h>
 
-# define V_DEBUG			true
-// # define V_DEBUG			false
+# define V_DEBUG			false
 # define USAGE	"Usage: ./corewar [-dump N -n pid] <champion.cor>"
 
 # define N1		"when using -n option, you should assign it for each player"
@@ -277,19 +276,15 @@ int				are_all_players_dead(t_player p[MAX_PLAYERS], int ps);
 void			pc_movement(t_env *e, t_process *prcs);
 void			move_pc(t_process *prcs, int interval);
 void			exec_ops(t_env *e, t_process *prcs);
-long				get_and_or_val(t_env *e, int pc, uint32_t arg[2], t_process *prcs);
-
-// int				get_and_or_val(t_env *e, int pc, int arg[2], t_process *prcs);
+long			get_and_or_val(t_env *e, int pc, u_int32_t arg[2], t_process *prcs);
 int				init_args(t_env *e, t_process *prcs);
 int				mem_to_val(t_env *e, int *ptr, int size);
-// int				get_sti_ldi_val(t_env *e, t_process *prcs, int arg[2]);
-int				get_sti_ldi_val(t_env *e, t_process *prcs, uint32_t arg[2]);
+int				mem_to_ind(t_env *e, int pc, short indirect);
+int				get_sti_ldi_val(t_env *e, t_process *prcs, u_int32_t arg[2]);
 void			int_to_mem(t_env *e, int val, int ptr);
 int				get_arg_value(t_env *e, t_process *prcs);
 int				get_arg_type(u_int8_t encoded, t_process *prcs,
 					t_env *e, int i);
-// int				get_ind_value(t_env *e, int pc, int ind);
-int				get_ind_value(t_env *e, int pc, short ind);
 void			hexdump(const unsigned char ram[MEM_SIZE], int width);
 int				valid_int(const char *str, int *num);
 
@@ -338,7 +333,7 @@ void			clean_op_player_name(t_player *players);
 int				valid_op_cooldown_finished(t_process *current);
 int				skip_arg(t_env *e, int skip
 					, const int arg, const u_int8_t op_code);
-uint32_t		char4_to_int(unsigned char tab[4]);
+u_int32_t		char4_to_int(unsigned char tab[4]);
 
 /*
 ** G OPS

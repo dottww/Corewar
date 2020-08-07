@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 20:34:44 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/06 12:24:34 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/07 14:07:24 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ void		op_and(t_env *e, t_process *prcs)
 	int		arg_2;
 	int		arg_3;
 
-	arg_1 = get_and_or_val(e, prcs->registers[PC], (uint32_t *)e->args[0], prcs);
-	arg_2 = get_and_or_val(e, prcs->registers[PC], (uint32_t *)e->args[1], prcs);
+	arg_1 = get_and_or_val(e, prcs->registers[PC]
+								, (u_int32_t *)e->args[0], prcs);
+	arg_2 = get_and_or_val(e, prcs->registers[PC]
+								, (u_int32_t *)e->args[1], prcs);
 	arg_3 = e->args[2][0];
 	prcs->registers[arg_3] = arg_1 & arg_2;
 	prcs->carry = (prcs->registers[arg_3] == 0 ? 1 : 0);

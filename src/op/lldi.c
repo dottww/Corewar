@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 20:35:45 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/06 23:18:40 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/07 02:11:03 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void		op_lldi(t_env *e, t_process *prcs)
 	int		arg_3;
 	int		ind;
 
-	arg_1 = get_sti_ldi_val(e, prcs, (uint32_t *)e->args[0]);
-	arg_2 = get_sti_ldi_val(e, prcs, (uint32_t *)e->args[1]);
+	arg_1 = get_sti_ldi_val(e, prcs, (u_int32_t *)e->args[0]);
+	arg_2 = get_sti_ldi_val(e, prcs, (u_int32_t *)e->args[1]);
 	arg_3 = e->args[2][0];
 	e->args[0][0] = arg_1;
 	e->args[1][0] = arg_2;

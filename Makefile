@@ -6,7 +6,7 @@
 #    By: weilin <weilin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/26 01:31:01 by cseguier          #+#    #+#              #
-#    Updated: 2020/08/06 16:02:08 by weilin           ###   ########.fr        #
+#    Updated: 2020/08/07 02:09:59 by weilin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ HDR = includes/corewar.h
 SRC = $(FILE:%=%)
 OBJ = $(FILE:%.c=objs/%.o)
 CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address,undefined #-g3 #-O3
-CC = gcc $(CFLAGS) $(INC)
+CC = clang $(CFLAGS) $(INC)
 RM = rm -rf
 
 all: $(NAME)
