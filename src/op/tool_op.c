@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 23:00:28 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/07 14:08:29 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/07 15:00:00 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,23 @@ u_int32_t		char4_to_int(unsigned char tab[4])
 
 int				mem_to_ind(t_env *e, int pc, short indirect)
 {
-	int			param;
-	long		pos;
+	int			val;
+	long		ptr;
+	int			move;
 	u_int8_t	tab[4];
 
-	pos = (pc + (indirect % IDX_MOD)) % MEM_SIZE; ///////pending_move_pc
-	tab[0] = e->arena[pos++ % MEM_SIZE];
-	tab[1] = e->arena[pos++ % MEM_SIZE];
-	tab[2] = e->arena[pos++ % MEM_SIZE];
-	tab[3] = e->arena[pos % MEM_SIZE];
-	param = char4_to_int(tab);
-	return (param);
+	move = (indirect % IDX_MOD);
+	ptr = pc + move;
+	if (ptr < 0)
+		ptr = MEM_SIZE + (ptr % MEM_SIZE);
+	else
+		ptr = ptr % MEM_SIZE;
+	tab[0] = e->arena[ptr++ % MEM_SIZE];
+	tab[1] = e->arena[ptr++ % MEM_SIZE];
+	tab[2] = e->arena[ptr++ % MEM_SIZE];
+	tab[3] = e->arena[ptr % MEM_SIZE];
+	val = char4_to_int(tab);
+	return (val);
 }
 
 long			get_and_or_val(t_env *e, int pc

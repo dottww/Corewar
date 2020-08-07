@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 20:35:05 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/07 13:50:56 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/07 14:47:34 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,25 @@ static void	op_verbose_4(t_process *prcs, int args[3][2])
 	ldi_second_line(prcs, args);
 }
 
-int				ft_ldi_value_from_address(t_env *e, int pc, long indirect)
+int				ldi_mem_to_indirect(t_env *e, int pc, long indirect)
 {
-	int			param;
-	long		pos;
-	u_int8_t		tab[4];
+	int			val;
+	long		ptr;
+	long		move;
+	u_int8_t	tab[4];
 
-	pos = (pc + (indirect % IDX_MOD)) % MEM_SIZE; ///////pending_move_pc
-	tab[0] = e->arena[pos++ % MEM_SIZE];
-	tab[1] = e->arena[pos++ % MEM_SIZE];
-	tab[2] = e->arena[pos++ % MEM_SIZE];
-	tab[3] = e->arena[pos % MEM_SIZE];
-	param = char4_to_int(tab);
-	return (param);
+	move = (indirect % IDX_MOD);
+	ptr = pc + move;
+	if (ptr < 0)
+		ptr = MEM_SIZE + (ptr % MEM_SIZE);
+	else
+		ptr = ptr % MEM_SIZE;
+	tab[0] = e->arena[ptr++ % MEM_SIZE];
+	tab[1] = e->arena[ptr++ % MEM_SIZE];
+	tab[2] = e->arena[ptr++ % MEM_SIZE];
+	tab[3] = e->arena[ptr % MEM_SIZE];
+	val = char4_to_int(tab);
+	return (val);
 }
 
 void		op_ldi(t_env *e, t_process *prcs)
@@ -78,7 +84,7 @@ void		op_ldi(t_env *e, t_process *prcs)
 	e->args[0][0] = arg_1;
 	e->args[1][0] = arg_2;
 	ind = arg_1 + arg_2;
-	prcs->registers[arg_3] = ft_ldi_value_from_address(e, prcs->registers[PC], ind);
+	prcs->registers[arg_3] = ldi_mem_to_indirect(e, prcs->registers[PC], ind);
 	V_DEBUG ? op_verbose_4(prcs, e->args) : 0;
 	pc_movement(e, prcs);
 }

@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/20 09:06:54 by cseguier          #+#    #+#             */
-/*   Updated: 2020/08/07 14:10:29 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/07 15:42:13 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../libft/includes/ft_printf.h"
 # include <stdbool.h>
 
+// # define V_DEBUG			true
 # define V_DEBUG			false
 # define USAGE	"Usage: ./corewar [-dump N -n pid] <champion.cor>"
 
@@ -282,6 +283,7 @@ int				mem_to_val(t_env *e, int *ptr, int size);
 int				mem_to_ind(t_env *e, int pc, short indirect);
 int				get_sti_ldi_val(t_env *e, t_process *prcs, u_int32_t arg[2]);
 void			int_to_mem(t_env *e, int val, int ptr);
+int		get_ind_value(t_env *e, int pc, short ind);
 int				get_arg_value(t_env *e, t_process *prcs);
 int				get_arg_type(u_int8_t encoded, t_process *prcs,
 					t_env *e, int i);

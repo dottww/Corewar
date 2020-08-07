@@ -9,16 +9,16 @@ DIFF=zzdiff1.txt
 PAULDIFF=zzpauldiff1.txt
 
 echo "verbose compare :"
-echo "./cc -v 31 -dump $i $1 $2 $3 > ${PAUL}"
-echo "./corewar -dump $i $1 $2 $3 > ${MINE}"
-echo "./corewar42 -v 31 $1 $2 $3 -d $i > ${OFI}"
+# echo "./cc -v 31 -dump $i $1 $2 $3 $4 > ${PAUL}"
+echo "./corewar -dump $i $1 $2 $3 $4 > ${MINE}"
+echo "./corewar42 -v 31 $1 $2 $3 $4 -d $6 > ${OFI}"
 echo "diff ${MINE} ${OFI} -s > $DIFF"
 
-for ((i=$5; i<=$5; i++));
+for ((i=$5; i<=$6; i++));
 do
 	echo "cycle =$i"
-	./corewar -dump $i $1 $2 $3> ${MINE}
-	./corewar42 -v 31 -d $i $1 $2 $3 > ${OFI}
+	./corewar -dump $i $1 $2 $3 $4 > ${MINE}
+	./corewar42 -d $i $1 $2 $3 $4 > ${OFI}
 	result=`diff ${MINE} ${OFI} -s`
 	if [ "${result}" != "Files ${MINE} and ${OFI} are identical" ];then
 		echo "\n>>>>>>>>>>>>>>>>>Dump diff at = $i<<<<<<<<<<<<<<<<<<<<<<<<\n"
@@ -27,7 +27,7 @@ do
 done
 
 diff ${MINE} ${OFI} -s > "$DIFF"
-
+./open.sh
 
 
 # ./corewar -n 2 p1.cor -n 1 zork.cor
