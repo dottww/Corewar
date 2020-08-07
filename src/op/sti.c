@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 20:35:17 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/06 15:23:24 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/06 23:18:45 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,18 @@ void		op_sti(t_env *e, t_process *prcs)
 	int		arg_3;
 
 	arg_1 = e->args[0][0];
-	arg_2 = get_sti_ldi_val(e, prcs, e->args[1]);
-	arg_3 = get_sti_ldi_val(e, prcs, e->args[2]);
+	arg_2 = get_sti_ldi_val(e, prcs, (uint32_t *)e->args[1]);
+	arg_3 = get_sti_ldi_val(e, prcs, (uint32_t *)e->args[2]);
 	e->args[1][0] = arg_2;
 	e->args[2][0] = arg_3;
 	ptr = (prcs->registers[PC] + ((arg_2 + arg_3) % IDX_MOD));
 	V_DEBUG ? op_verbose_4(prcs, e->args, ptr) : 0;
 	ptr %= MEM_SIZE;
+	// ft_printf("e->args[0][0]=%d\n", e->args[0][0]);
+	// ft_printf("arg_1=%d\n", arg_1);
+	// ft_printf("arg_2=%d\n", arg_2);
+	// ft_printf("arg_3=%d\n", arg_3);
+	// ft_printf("put r[%d]=%d to ptr=%d\n", arg_1, prcs->registers[arg_1], ptr);
 	int_to_mem(e, prcs->registers[arg_1], (ptr + 3) % MEM_SIZE);
 	pc_movement(e, prcs);
 }

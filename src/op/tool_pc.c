@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 20:04:29 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/06 15:12:43 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/07 01:54:44 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	move_pc(t_process *prcs, int move)
 
 	new_pc = prcs->registers[PC] + move;
 	if (new_pc < 0)
-		new_pc = MEM_SIZE + (move % MEM_SIZE);
+		new_pc = MEM_SIZE + (new_pc % MEM_SIZE);
 	else
 		new_pc = new_pc % MEM_SIZE;
 	prcs->registers[PC] = new_pc;

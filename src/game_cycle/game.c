@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 07:48:58 by cseguier          #+#    #+#             */
-/*   Updated: 2020/08/06 15:12:43 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/07 01:54:44 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		are_all_players_dead(t_player player[MAX_PLAYERS], int player_count)
 
 int		is_game_finished(t_env *e)
 {
-	if ((e->info.process_nb <= 0) || (e->game.max_ctd <= 0))
+	if (e->info.process_nb <= 0)
 		return (1);
 	return (0);
 }
@@ -99,8 +99,6 @@ void	game_loop(t_env *e)
 	while (!(is_game_finished(e)))
 	{
 		e->game.cycle_cpt++;
-		manage_cycle_to_die(e);
-		e->game.ctd_cpt++;
 		V_DEBUG ? verbose_2_cycle(e->game.cycle_cpt) : 0;
 		/*de*/ (0)?	verbose_2_cycle2(e->game.cycle_cpt) : 0;
 		// print_list(e->info);
@@ -117,7 +115,15 @@ void	game_loop(t_env *e)
 			/*de*/ (0)?	ft_printf(" / %d )\n", current->op_cooldown):0;
 			}
 			// if (is_not_waiting(current))
-			if (current->op_code_to_exec == -1 || current->op_code_to_exec == -2)
+				
+
+	
+			if (current->op_code_to_exec == -3 && current->op_cooldown--)
+				{
+					if (current->op_cooldown == 0)
+						current->op_code_to_exec = -1;
+				}
+			else if (current->op_code_to_exec == -1 || current->op_code_to_exec == -2)
 				{
 					/*de*/ (0)?	ft_printf("Load_CD_or_move1\n"):0;
 					get_op_to_exec(e, current);
@@ -125,6 +131,8 @@ void	game_loop(t_env *e)
 			else if (valid_op_cooldown_finished(current))
 				exec_ops(e, current);
 		}
+		e->game.ctd_cpt++;
+		manage_cycle_to_die(e);
 		if (e->dump != -1 && !(is_game_finished(e))
 			&& e->dump == e->game.cycle_cpt)
 		{

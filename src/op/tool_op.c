@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 23:00:28 by weilin            #+#    #+#             */
-/*   Updated: 2020/08/06 14:22:28 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/07 01:54:44 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		get_ind_value(t_env *e, int pc, short ind)
 // 	/*or*/ (0)?ft_printf("val=%d \n", val):0;
 // 	return (val);
 // }
-uint32_t		ft_convert_to_int(unsigned char tab[4])
+uint32_t		char4_to_int(unsigned char tab[4])
 {
 	uint32_t	result;
 	int			index;
@@ -76,7 +76,7 @@ int				ft_value_from_address(t_env *e, int pc, short indirect)
 	tab[1] = e->arena[pos++ % MEM_SIZE];
 	tab[2] = e->arena[pos++ % MEM_SIZE];
 	tab[3] = e->arena[pos % MEM_SIZE];
-	param = ft_convert_to_int(tab);
+	param = char4_to_int(tab);
 	return (param);
 }
 // long ft_parameter_recover_value(t_vm *vm, size_t pc,	uint32_t tab[2], t_process *process)
@@ -98,7 +98,7 @@ long		get_and_or_val(t_env *e, int pc, uint32_t arg[2], t_process *prcs)
 // 	return (arg[0]);
 // }
 
-int		get_sti_ldi_val(t_env *e, t_process *prcs, int arg[2])
+int		get_sti_ldi_val(t_env *e, t_process *prcs, uint32_t arg[2])
 {
 	int	val;
 
@@ -108,6 +108,20 @@ int		get_sti_ldi_val(t_env *e, t_process *prcs, int arg[2])
 	else if (arg[1] == T_REG)
 		val = prcs->registers[val];
 	else if (arg[1] == T_IND)
-		val = get_ind_value(e, prcs->registers[PC], val);
+		val = ft_value_from_address(e, prcs->registers[PC], val);
 	return (val);
 }
+
+// int		get_sti_ldi_val(t_env *e, t_process *prcs, int arg[2])
+// {
+// 	int	val;
+
+// 	val = arg[0];
+// 	if (arg[1] == T_DIR)
+// 		val = (short)arg[0];
+// 	else if (arg[1] == T_REG)
+// 		val = prcs->registers[val];
+// 	else if (arg[1] == T_IND)
+// 		val = get_ind_value(e, prcs->registers[PC], val);
+// 	return (val);
+// }

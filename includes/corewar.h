@@ -6,7 +6,7 @@
 /*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/20 09:06:54 by cseguier          #+#    #+#             */
-/*   Updated: 2020/08/06 15:53:51 by weilin           ###   ########.fr       */
+/*   Updated: 2020/08/06 23:18:12 by weilin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,7 +282,8 @@ long				get_and_or_val(t_env *e, int pc, uint32_t arg[2], t_process *prcs);
 // int				get_and_or_val(t_env *e, int pc, int arg[2], t_process *prcs);
 int				init_args(t_env *e, t_process *prcs);
 int				mem_to_val(t_env *e, int *ptr, int size);
-int				get_sti_ldi_val(t_env *e, t_process *prcs, int arg[2]);
+// int				get_sti_ldi_val(t_env *e, t_process *prcs, int arg[2]);
+int				get_sti_ldi_val(t_env *e, t_process *prcs, uint32_t arg[2]);
 void			int_to_mem(t_env *e, int val, int ptr);
 int				get_arg_value(t_env *e, t_process *prcs);
 int				get_arg_type(u_int8_t encoded, t_process *prcs,
@@ -337,6 +338,7 @@ void			clean_op_player_name(t_player *players);
 int				valid_op_cooldown_finished(t_process *current);
 int				skip_arg(t_env *e, int skip
 					, const int arg, const u_int8_t op_code);
+uint32_t		char4_to_int(unsigned char tab[4]);
 
 /*
 ** G OPS
